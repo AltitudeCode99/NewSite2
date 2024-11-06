@@ -11,9 +11,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 180vh;
             margin: 0;
         }
+        input[type="checkbox"],
+        input[type="radio"] {
+           box-shadow: none;
+           border: 1px solid #ccc;
+           outline: none;
+           appearance: none; /* Removes default styling */
+           width: 16px; /* Adjust width and height as needed */
+           height: 16px;
+           margin-right: 5px; /* Adds spacing */
+       }
+       input[type="checkbox"]:checked,
+       input[type="radio"]:checked {
+           background-color: #002147; /* Checked background color */
+           border-color: #002147; /* Checked border color */
+       }
         .quote-box {
             background-color: #ffffff;
             border: 1px solid #ccc;
@@ -107,11 +122,27 @@
     <label for="company">Company:</label>
     <input type="text" id="company" placeholder="Enter company name" style="width: 580px;"/>
 
-    <label for="phone">Phone Number:</label>
-    <input type="tel" id="phone" placeholder="Enter phone number" style="width: 580px;"/>
+    <!-- Company Address Fields -->
+    <label for="companyAddress">Company Address:</label>
+    <input type="text" id="companyAddress" placeholder="Address" style="width: 580px;"/>
+    
+    <div class="row">
+        <div style="flex: 1;">
+            <input type="text" id="companyCity" placeholder="City" style="width: 270px;"/>
+        </div>
+        <div style="flex: 1;">
+            <input type="text" id="companyState" placeholder="State" style="width: 130px;"/>
+        </div>
+        <div style="flex: 1;">
+            <input type="text" id="companyZip" placeholder="Zipcode" style="width: 130px;"/>
+        </div>
+    </div>
 
     <label for="email">Email:</label>
     <input type="email" id="email" placeholder="Enter email address" style="width: 580px;"/>
+
+     <label for="phone">Phone Number:</label>
+     <input type="tel" id="phone" placeholder="Enter phone number" style="width: 580px;"/>
 
     <label for="service">Select Service:</label>
     <select id="service" onchange="calculateQuote()">
@@ -120,15 +151,33 @@
         <option value="40-45">Armed Security ($40-$45/hr)</option>
         <option value="60-80">Executive Protection ($60-$80/hr)</option>
     </select>
+    <!-- Service Location Name Field -->
+<label for="serviceLocationName">Service Location Name:</label>
+<input type="text" id="serviceLocationName" placeholder="Enter service location name" style="width: 580px;"/>
+    <!-- Service Location Address Fields -->
+    <label for="serviceLocation">Service Location:</label>
+    <input type="text" id="serviceLocation" placeholder="Address" style="width: 580px;"/>
+    
+    <div class="row">
+        <div style="flex: 1;">
+            <input type="text" id="serviceCity" placeholder="City" style="width: 270px;"/>
+        </div>
+        <div style="flex: 1;">
+            <input type="text" id="serviceState" placeholder="State" style="width: 130px;"/>
+        </div>
+        <div style="flex: 1;">
+            <input type="text" id="serviceZip" placeholder="Zipcode" style="width: 130px;"/>
+        </div>
+    </div>
      <label>Requested Days:</label>
     <div class="day-checkboxes">
-        <label>Mon<input type="checkbox" id="monday" /> </label>
-        <label>Tues<input type="checkbox" id="tuesday" /> </label>
-        <label>Weds<input type="checkbox" id="wednesday" /> </label>
-        <label>Thu<input type="checkbox" id="thursday" /> </label>
-        <label>Fri<input type="checkbox" id="friday" /> </label>
-        <label>Sat<input type="checkbox" id="saturday" /> </label>
-        <label>Sun<input type="checkbox" id="sunday" /> </label>
+        <label>Mon<br><input type="checkbox" id="monday" /> </label>
+        <label>Tues<br><input type="checkbox" id="tuesday" /> </label>
+        <label>Weds<br><input type="checkbox" id="wednesday" /> </label>
+        <label>Thu<br><input type="checkbox" id="thursday" /> </label>
+        <label>Fri<br><input type="checkbox" id="friday" /> </label>
+        <label>Sat<br><input type="checkbox" id="saturday" /> </label>
+        <label>Sun<br><input type="checkbox" id="sunday" /> </label>
     </div>
     <div class="row">
         <div style="flex: 1;">
@@ -139,36 +188,88 @@
             <label for="endDate">Service End Date:</label>
             <input type="date" id="endDate" onchange="calculateQuote()" style="width: 150px;"/>
         </div>
+        <div style="flex: 1;">
+            <label>24 Hour Coverage: <br></label>
+            <input type="checkbox" style="padding-left: 10px"id="continuousCoverage" onchange="toggleHoursPerDay()" style="width: 15;"/input>
     </div>
-    <div class="row">
-        <div style="flex: 1;">
-            <label>24 Hour<br> Coverage: </label>
-            <input type="checkbox" style="padding-left: 20px" id="continuousCoverage" onchange="toggleHoursPerDay()" style="width: 15;"/input>
-        </div>
-        
-        <div style="flex: 1;">
-            <label for="hoursPerDay">Coverage per Day:</label>
-            <input type="number" placeholder="Hours" id="hoursPerDay" value="" min="1" maxlength="3" onchange="calculateQuote()" style="width: 130px;"/>
-        </div>
-        <div style="flex: 1;">
-            <label for="guardsPerShift">Guards Per Shift:</label>
-            <input type="number" id="guardsPerShift" value="1" min="1" maxlength="3" onchange="calculateQuote()" style="width: 100px;
-            "/>
-        </div>
-        <div style="flex: 1;">
-            <label> Overnight Differential:</label>
-            <input type="checkbox" style="padding-left: 20px;" id="overnightDifferential" onchange="calculateQuote();" style="width: 15px;"/>
+    </div>
+   <div class="row">
+    <div style="flex: 1;">
+        <label for="hoursPerDay">Coverage per Day:</label>
+        <input type="number" placeholder="Hours" id="hoursPerDay" value="" min="1" maxlength="3" onchange="calculateQuote()" style="width: 130px;"/>
+    </div>
+    <div style="flex: 1;">
+        <label for="serviceShiftTime">Service Shift Time:</label>
+        <select id="serviceShiftTime" style="width: 150px;" onchange="calculateQuote()">
+            <option value="day">Day Shift</option>
+            <option value="mid">Mid Shift</option>
+            <option value="night">Night Shift</option>
+            <option value="overnight">Overnight Shift</option>
+        </select>
+    </div>
+    <div style="flex: 1;">
+        <label for="guardsPerShift">Guards Per Shift:</label>
+        <input type="number" id="guardsPerShift" value="1" min="1" maxlength="3" onchange="calculateQuote()" style="width: 100px;"/>
+    </div>
+</div>
+
+<!-- New Row for Type of Service and Location Type -->
+<div class="row">
+    <div style="flex: 1;">
+        <label>Type of Service:</label>
+        <div>
+            <label><input type="radio" name="serviceType" value="static" checked onclick="calculateQuote()"> Static</label>
+            <label><input type="radio" name="serviceType" value="mobile" onclick="calculateQuote()"> Mobile</label>
         </div>
     </div>
+    <div style="flex: 1;">
+        <label>Location Type:</label>
+        <div>
+            <label><input type="radio" name="locationType" value="indoor" checked onclick="calculateQuote()"> Indoor</label>
+            <label><input type="radio" name="locationType" value="outdoor" onclick="calculateQuote()"> Outdoor</label>
+            <label><input type="radio" name="locationType" value="inandout" onclick="calculateQuote()"> In and Out</label>
+        </div>
+    </div>
+</div>
     <label for="additionalDetails">Additional Details:</label>
-    <textarea id="additionalDetails" rows="3" placeholder="Provide any additional details..."></textarea>
-    <div class="disclaimer">Estimate Quote is subject to change due to requested demands.</div>
+    <textarea id="additionalDetails" rows="5px" placeholder="Provide any additional details..."></textarea>
+
+<!-- Terms and Conditions Section -->
+<label for="terms" style="font-size: small;">Terms and Conditions:</label>
+<div id="terms" style="width: 100%; height: 150px; overflow-y: scroll; font-size: x-small; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+    <p><strong>1. Acceptance of Terms</strong><br>
+     By requesting a quote through our website, you (the "Client") agree to these terms and conditions. This quote is provided for informational purposes only and does not constitute a binding agreement.</p>
+    <p><strong>2. Validity of Quote</strong><br>
+    Quotes are valid for a limited time, typically 5 days from the date of issuance, unless otherwise stated. Prices, availability, and terms may change after this period.</p>
+    <p><strong>3. Scope of Services</strong><br>
+    This quote is based on the information provided by the Client. Any changes in the scope of services may result in adjustments to the quoted price.</p>
+    <p><strong>4. Accuracy of Information</strong><br>
+    The Client is responsible for providing accurate and complete information. Any discrepancies may result in changes to the final pricing.</p>
+    <p><strong>5. Non-Binding Nature</strong><br>
+    This quote is non-binding and does not constitute an obligation on either party until a formal agreement is signed. We reserve the right to withdraw or modify the quote at any time prior to the final agreement.</p>
+    <p><strong>6. Confidentiality</strong><br>
+    All information provided in this quote, including pricing and service details, is confidential. The Client agrees not to disclose this information to third parties without our written consent.</p>
+    <p><strong>7. Payment Terms</strong><br>
+    Upon acceptance of the quote and signing of the service agreement, payment terms, as outlined in the service contract, will apply.</p>
+    <p><strong>8. Limitation of Liability</strong><br>
+    We strive to provide accurate quotes, but we will not be liable for any losses arising from reliance on the quote prior to entering into a formal contract.</p>
+    <p><strong>9. Governing Law</strong><br>
+    These terms and conditions are governed by the laws of Colorado. Any disputes arising in relation to this quote will be subject to the exclusive jurisdiction of the courts of Colorado.</p>
+    <p><strong>10. Contact Information</strong><br>
+    For any questions or concerns, please contact us at quotes@team-altitude.com</p>
+</div>
+
+<!-- Acceptance of Terms Checkbox -->
+<label style="font-size: x-small; display: flex; align-items: center; margin-top: 10px;">
+    <input type="checkbox" id="acceptTerms" required checked disabled style="margin-right: 5px;">
+    By requesting a quote through our website, you (the "Client") agree to these terms and conditions. This quote is provided for informational purposes only and does not constitute a binding agreement.
+</label>
 
     <div class="result" id="resultContainer" style="display: none;">
         Estimated Quote: $<span id="minQuote"></span> - $<span id="maxQuote"></span>
     </div>
 
-    <button class="button" onclick="calculateQuote()">Press</button>
+    <button class="button" onclick="calculateQuote()">Book Service Now</button>
     <button class="button" onclick="sendEmail()">Send Quote by Email</button>
     </div>
 </div>
@@ -176,18 +277,41 @@
 <script>
     const holidays = ["01-01", "07-04", "12-25", "12-24", "11-11", "12-31"];
 
-    function toggleHoursPerDay() {
-        const hoursInput = document.getElementById("hoursPerDay");
-        const continuousCoverage = document.getElementById("continuousCoverage").checked;
-        if (continuousCoverage) {
-            hoursInput.value = 24;
-            hoursInput.disabled = true;
-        } else {
-            hoursInput.value = "";
-            hoursInput.disabled = false;
-        }
-        calculateQuote();
+    function toggleCoverageOptions() {
+    const hoursInput = document.getElementById("hoursPerDay");
+    const shiftDropdown = document.getElementById("serviceShiftTime");
+    const continuousCoverage = document.getElementById("continuousCoverage").checked;
+
+    if (continuousCoverage) {
+        // Set hours per day to 24 and disable input
+        hoursInput.value = 24;
+        hoursInput.disabled = true;
+
+        // Set dropdown to "All Shifts", select it, and disable
+        shiftDropdown.innerHTML = '<option value="all">All Shifts</option>';
+        shiftDropdown.value = "all";
+        shiftDropdown.disabled = true; // Ensures dropdown is visibly disabled
+        shiftDropdown.style.pointerEvents = "none"; // Prevents interaction
+    } else {
+        // Reset hours per day and enable input
+        hoursInput.value = "";
+        hoursInput.disabled = false;
+
+        // Restore original options for dropdown, re-enable, and reset style
+        shiftDropdown.innerHTML = `
+            <option value="day">Day Shift</option>
+            <option value="mid">Mid Shift</option>
+            <option value="night">Night Shift</option>
+            <option value="overnight">Overnight Shift</option>
+        `;
+        shiftDropdown.disabled = false;
+        shiftDropdown.style.pointerEvents = "auto";
     }
+    calculateQuote();
+}
+
+// Attach the updated function to the checkbox change event
+document.getElementById("continuousCoverage").addEventListener("change", toggleCoverageOptions);
 
     function isHoliday(date) {
         const formattedDate = date.toISOString().slice(5, 10); // "MM-DD"
@@ -202,6 +326,12 @@
             ((day >= 15 && day <= 21) && (month === 4 || month === 9)) // Memorial Day (May) and Veterans Day (October)
         );
     }
+function toggleShiftTimeDropdown() {
+    const shiftDropdown = document.getElementById("serviceShiftTime");
+    const continuousCoverage = document.getElementById("continuousCoverage").checked;
+    shiftDropdown.disabled = continuousCoverage;
+    calculateQuote();
+}
 
 function calculateQuote() {
     const serviceRange = document.getElementById('service').value.split("-");
@@ -209,8 +339,8 @@ function calculateQuote() {
     const maxRate = parseFloat(serviceRange[1]);
     const hoursPerDay = document.getElementById("continuousCoverage").checked ? 24 : parseFloat(document.getElementById('hoursPerDay').value);
     const guardsPerShift = parseFloat(document.getElementById('guardsPerShift').value);
-    const overnightDifferential = document.getElementById("overnightDifferential").checked ? 100 : 0;
-
+    const overnightDifferential = document.getElementById("serviceShiftTime").value === "overnight" ? 100 : 0;
+    
     if (!serviceRange[0] || isNaN(hoursPerDay) || isNaN(guardsPerShift)) {
         document.getElementById('resultContainer').style.display = 'none';
         return;
@@ -226,6 +356,13 @@ function calculateQuote() {
     const start = new Date(document.getElementById('startDate').value);
     const end = new Date(document.getElementById('endDate').value);
 
+    // Check if Mobile or Outdoor/In and Out is selected, add fees
+    const serviceType = document.querySelector('input[name="serviceType"]:checked').value;
+    const locationType = document.querySelector('input[name="locationType"]:checked').value;
+    let additionalFee = 0;
+    if (serviceType === "mobile") additionalFee += 100 * guardsPerShift;
+    if (locationType === "outdoor" || locationType === "inandout") additionalFee += 100 * guardsPerShift;
+
     // Iterate only over selected days in the range
     for (let day = new Date(start); day <= end; day.setDate(day.getDate() + 1)) {
         const dayName = day.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
@@ -237,14 +374,13 @@ function calculateQuote() {
         }
     }
 
-    const minTotal = (minRate * hoursPerDay * guardsPerShift * selectedDayCount + holidayCharge + overnightDifferential).toFixed(2);
-    const maxTotal = (maxRate * hoursPerDay * guardsPerShift * selectedDayCount + holidayCharge + overnightDifferential).toFixed(2);
+    const minTotal = (minRate * hoursPerDay * guardsPerShift * selectedDayCount + holidayCharge + overnightDifferential + additionalFee).toFixed(2);
+    const maxTotal = (maxRate * hoursPerDay * guardsPerShift * selectedDayCount + holidayCharge + overnightDifferential + additionalFee).toFixed(2);
 
     document.getElementById('minQuote').innerText = minTotal.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     document.getElementById('maxQuote').innerText = maxTotal.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     document.getElementById('resultContainer').style.display = 'block';
 }
-
     function calculateDaysNeeded() {
         const start = new Date(document.getElementById('startDate').value);
         const end = new Date(document.getElementById('endDate').value);
